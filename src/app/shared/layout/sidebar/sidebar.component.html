@@ -1,0 +1,27 @@
+<div
+  class="tw-fixed tw-bg-blue-500 tw-h-full tw-text-white"
+  [ngClass]="!isCollapse ? 'tw-w-[160px]' : 'tw-w-[48px]'"
+>
+  <div class="tw-flex tw-justify-center tw-text-lg tw-font-bold tw-mb-4 tw-py-2 tw-px-4">
+    <a routerLink="/dashboard" *ngIf="!isCollapse; else elseLogo">
+      MANAGEMENT
+    </a>
+    <ng-template #elseLogo>
+      <a routerLink="/dashboard">
+        <fa-icon [icon]="faHouseUser"></fa-icon>
+      </a>
+    </ng-template>
+  </div>
+  <div class="tw-flex tw-items-center tw-flex-col tw-space-y-4 tw-p-4" *ngIf="!isCollapse; else elseBlock">
+    <a *ngFor="let menu of menus; index as i" routerLink="/{{menu.to}}" class="hover:tw-font-bold">
+      {{ menu.title }}
+    </a>
+  </div>
+  <ng-template #elseBlock>
+    <div class="tw-flex tw-items-center tw-flex-col tw-space-y-4 tw-p-4">
+      <a *ngFor="let menu of menus; index as i" routerLink="/{{menu.to}}" class="hover:tw-font-bold">
+        <fa-icon [icon]="menu.icon"></fa-icon>
+      </a>
+    </div>
+  </ng-template>
+</div>

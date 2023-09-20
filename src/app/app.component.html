@@ -1,0 +1,7 @@
+<!-- <router-outlet name="sidebar" isCollapse="isSidebarCollapse" (onToggleSidebar)="toggleSidebar()"></router-outlet> -->
+<app-sidebar [isCollapse]="isSidebarCollapse" (onToggleSidebar)="toggleSidebar()"></app-sidebar>
+<app-header [isCollapse]="isSidebarCollapse" (onToggleSidebar)="toggleSidebar()"></app-header>
+<div class="tw-h-[calc(100vh-57px)] tw-pt-[40px]" [ngClass]="isSidebarCollapse ? 'tw-ml-[48px]' : 'tw-ml-[160px]'">
+  <router-outlet></router-outlet>
+</div>
+<app-footer [isCollapse]="isSidebarCollapse"></app-footer>

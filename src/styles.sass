@@ -1,0 +1,18 @@
+@tailwind base
+
+@layer base
+  h1
+    @apply tw-text-2xl tw-font-bold
+  h2
+    @apply tw-text-xl tw-font-bold
+
+  button
+    @apply tw-bg-blue-500 hover:tw-bg-blue-600 tw-py-2 tw-px-4 tw-rounded tw-text-white tw-cursor-pointer tw-select-none
+    &[type="submit"]
+      @apply tw-bg-green-500 hover:tw-bg-green-600 tw-py-2 tw-px-4 tw-rounded tw-text-white tw-cursor-pointer tw-select-none
+    &[type="submit"]:disabled
+      @apply tw-bg-gray-500 tw-py-2 tw-px-4 tw-rounded tw-text-white tw-select-none
+
+@tailwind components
+@tailwind utilities
+

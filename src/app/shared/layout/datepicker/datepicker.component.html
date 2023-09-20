@@ -1,0 +1,56 @@
+<div class="tw-relative tw-text-sm tw-select-none tw-w-full">
+  <div
+    class="tw-bg-white tw-border tw-border-black tw-text-gray-900 tw-p-2.5 tw-rounded-lg tw-w-full tw-relative tw-cursor-pointer"
+    (click)="toggleCalendar()"
+  >
+    <div *ngIf="datePayload.day === 0; else elsePh">
+      {{ placeholder }}
+    </div>
+    <ng-template #elsePh>
+      <div> {{ getDateString() }} </div>
+    </ng-template>
+    <div class="tw-absolute tw-right-1 tw-top-2">
+      <fa-icon
+        [icon]="faCaretDown"
+        *ngIf="!isShow"
+        class="tw-text-md tw-w-5 tw-h-5 tw-text-gray-500"
+      ></fa-icon>
+      <fa-icon
+        [icon]="faCaretUp"
+        *ngIf="isShow"
+        class="tw-text-md tw-w-5 tw-h-5 tw-text-gray-500"
+      ></fa-icon>
+    </div>
+  </div>
+  <div *ngIf="isShow" class="tw-absolute tw-bg-gray-100 tw-w-[280px] tw-z-[1] tw-border tw-rounded-md tw-p-4">
+    <div class="tw-flex tw-justify-between tw-border-gray-100 tw-pb-2 tw-border-b-2">
+      <div class="tw-cursor-pointer" (click)="goPrevMonth()">
+        <fa-icon [icon]="faAngleLeft" class="tw-text-md tw-w-5 tw-h-5 tw-text-gray-500 hover:tw-text-blue-500"></fa-icon>
+      </div>
+      <div class="tw-cursor-pointer">
+        {{ getMonth() }} {{ year }}
+      </div>
+      <div class="tw-cursor-pointer" (click)="goNextMonth()">
+        <fa-icon [icon]="faAngleRight" class="tw-text-md tw-w-5 tw-h-5 tw-text-gray-500 hover:tw-text-blue-500"></fa-icon>
+      </div>
+    </div>
+    <div class="tw-grid tw-grid-cols-7 tw-gap-1 tw-pt-2">
+      <div *ngFor="let d of days;" class="tw-text-center">
+        {{ d.short }}
+      </div>
+    </div>
+    <div class="tw-grid tw-grid-cols-7 tw-gap-1 tw-pt-1">
+      <div *ngFor="let w of prevWeek()" class="tw-text-center tw-text-gray-500">
+        {{ w.dt.getDate() }}
+      </div>
+      <div
+        *ngFor="let m of monthDate"
+        class="tw-text-center tw-cursor-pointer"
+        [ngClass]="isMoreDate(m.dt) ? 'tw-text-gray-500' : 'hover:tw-text-blue-500'"
+        (click)="selectDate(m.dt)"
+      >
+        {{ m.dt.getDate() }}
+      </div>
+    </div>
+  </div>
+</div>

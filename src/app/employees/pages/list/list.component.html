@@ -1,0 +1,118 @@
+<div class="tw-p-4">
+  <h1 class="tw-mb-4">Employees</h1>
+  <div
+    class="tw-grid tw-justify-between tw-items-center tw-mb-4"
+    [ngClass]="isLogin ? 'sm:tw-grid-cols-1 md:tw-grid-cols-[85%,15%] lg:tw-grid-cols-[90%,10%]': 'tw-grid-cols-1'"
+  >
+    <div
+      class="tw-grid tw-grid-cols-[80%,20%] tw-border-[1px] tw-border-gray-500 tw-p-2 tw-rounded max-[768px]:tw-mb-2 tw-items-end"
+      [ngClass]="isLogin ? 'md:tw-mr-4 lg:tw-mr-4' : ''"
+    >
+      <div class="tw-grid tw-grid-cols-3 tw-gap-[8px]">
+        <div>
+          <label for="searching">Searching:</label>
+          <input
+            type="text"
+            placeholder="Search"
+            [(ngModel)]="keyword"
+          />
+        </div>
+        <div>
+          <label for="limit">Limit:</label>
+          <input
+            id="limit"
+            type="number"
+            placeholder="1"
+            [(ngModel)]="limit"
+          />
+        </div>
+        <div>
+          <label for="sorting">Sorting:</label>
+          <select id="sortedBy" [(ngModel)]="sortedBy">
+            <option value="" disabled>sort</option>
+            <option *ngFor="let opt of tHead" [value]="opt.value">
+              {{ opt.title }}
+            </option>
+          </select>
+        </div>
+      </div>
+      <button (click)="handleFilter()" class="tw-ml-2 tw-h-full">
+        Filter
+      </button>
+    </div>
+    <a
+      routerLink="/employees/add"
+      class="tw-text-sm tw-text-center tw-h-full"
+      *ngIf="isLogin"
+    >
+      <button class="tw-h-full">Add Employee</button>
+    </a>
+  </div>
+  <div class="tableFixHead">
+    <table>
+      <thead>
+        <tr>
+          <th *ngFor="let title of tHead; index as i">
+            {{ title.title }}
+          </th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr
+          *ngFor="let employee of employees; index as i"
+          (click)="navigateTo(employee.id)"
+          class="hover:tw-bg-gray-300 hover:tw-text-white tw-cursor-pointer tw-rounded-md"
+        >
+          <td>{{ i + ((pagination - 1) * limit) + 1 }}</td>
+          <td>{{ employee.username }}</td>
+          <td>{{ employee.firstName }}</td>
+          <td>{{ employee.lastName }}</td>
+          <td>{{ employee.email }}</td>
+          <td>{{ employee.birthDate }}</td>
+          <td>{{ formatNumber(employee.basicSalary) }}</td>
+          <td>{{ employee.status }}</td>
+          <td>{{ employee.group }}</td>
+          <td>{{ employee.description }}</td>
+          <td class="tw-flex tw-gap-[4px]" *ngIf="isLogin; else elseAction">
+            <button
+              (click)="handleEdit();$event.stopPropagation()"
+              class="tw-text-amber-200 hover:tw-bg-amber-200 tw-p-2 tw-rounded hover:tw-text-white"
+            >
+              <fa-icon [icon]="faEdit"></fa-icon>
+            </button>
+            <button
+              (click)="handleDelete(employee.id);$event.stopPropagation()"
+              class="tw-text-red-400 hover:tw-bg-red-400 tw-p-2 tw-rounded hover:tw-text-white"
+            >
+              <fa-icon [icon]="faTrash"></fa-icon>
+            </button>
+          </td>
+          <ng-template #elseAction>
+            <td>
+              <a routerLink="/login">
+                <button>Login First</button>
+              </a>
+            </td>
+          </ng-template>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+  <div class="tw-text-right tw-mt-4 tw-space-x-2">
+    <fa-icon
+      [icon]="faChevronLeft"
+      class="tw-cursor-pointer tw-select-none"
+      [ngClass]="pagination !== 1 ? 'tw-text-blue-500' : 'tw-text-gray-300'"
+      (click)="handlePagination('prev')"
+    ></fa-icon>
+    <span>
+      {{ pagination }}
+    </span>
+    <fa-icon
+      [icon]="faChevronRight"
+      class="tw-cursor-pointer tw-select-none"
+      [ngClass]="pagination < totalPage ? 'tw-text-blue-500' : 'tw-text-gray-300'"  
+      (click)="handlePagination('next')"
+    ></fa-icon>
+  </div>
+</div>

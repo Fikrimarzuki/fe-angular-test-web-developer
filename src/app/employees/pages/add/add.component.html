@@ -1,0 +1,79 @@
+<div class="tw-p-4">
+  <h1 class="tw-mb-2">Add Employee</h1>
+  <form [formGroup]="employeeForm" (ngSubmit)="handleAdd()">
+    <div class="form-group">
+      <label for="username">Username</label>
+      <input id="username" type="text" formControlName="username" placeholder="Username" />
+    </div>
+    <div class="form-group">
+      <label for="firstname">First Name</label>
+      <input id="firstname" type="text" formControlName="firstName" placeholder="Firstname" />
+    </div>
+    <div class="form-group">
+      <label for="lastname">Last Name</label>
+      <input id="lastname" type="text" formControlName="lastName" placeholder="Lastname" />
+    </div>
+    <div class="form-group">
+      <label for="email">Email</label>
+      <input id="email" type="email" formControlName="email" placeholder="Email" />
+    </div>
+    <div class="form-group">
+      <label for="birthdate">Birth Date</label>
+      <app-datepicker key_name="birthDate" placeholder="Birth Date" (changeDate)="handleChangeDate($event)"></app-datepicker>
+    </div>
+    <div class="form-group">
+      <label for="basicSalary">Salary</label>
+      <input id="basicSalary" type="number" formControlName="basicSalary" placeholder="Salary" />
+    </div>
+    <div class="form-group">
+      <label for="status">Status</label>
+      <input id="status" type="text" formControlName="status" placeholder="Status" />
+    </div>
+    <div class="form-group">
+      <label for="description">Join Date</label>
+      <app-datepicker key_name="description" placeholder="Description" (changeDate)="handleChangeDate($event)"></app-datepicker>
+    </div>
+    <div>
+      <div>Group</div>
+      <div class="tw-relative">
+        <div
+          (click)="toggleDropdown()"
+          class="tw-p-1 tw-border-[1px] tw-border-black tw-rounded tw-flex tw-justify-between tw-select-none tw-cursor-pointer"
+        >
+          {{ group ? group : "Select Group" }}
+          <fa-icon [icon]="faChevronDown" *ngIf="!isShow"></fa-icon>
+          <fa-icon [icon]="faChevronUp" *ngIf="isShow"></fa-icon>
+        </div>
+        <div
+          *ngIf="isShow"
+          class="tw-absolute tw-z-[2] tw-bottom-[33px] tw-rounded-md tw-border-[1px] tw-border-black tw-bg-white tw-w-full tw-select-none"
+        >
+          <div class="tw-overflow-y-auto tw-max-h-[320px] tw-cursor-pointer">
+            <div
+              *ngFor="let item of groupList"
+              (click)="select(item)"
+              class="hover:tw-bg-gray-300 tw-p-1 last:tw-pb-0 first:tw-rounded-t-md hover:tw-text-gray-500 tw-select-none"
+            >
+              {{ item }}
+            </div>
+            <div *ngIf="groupList.length === 0">No Result Found</div>
+          </div>
+          <input
+            type="text"
+            placeholder="Search group"
+            [(ngModel)]="keyword"
+            [ngModelOptions]="{standalone: true}"
+            (keyup)="handleSearch(keyword)"
+            class="tw-w-full tw-border-0 tw-h-[36px] tw-p-2 tw-rounded-b-md focus:tw-outline-0"
+          />
+        </div>
+      </div>
+    </div>
+    <div class="tw-space-x-4 tw-mt-4">
+      <button type="submit" [disabled]="!employeeForm.valid">Save</button>
+      <a routerLink="/employees">
+        <button>Cancel</button>
+      </a>
+    </div>
+  </form>
+</div>

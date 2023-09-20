@@ -1,0 +1,20 @@
+<div
+  class="tw-fixed tw-bg-green-500 tw-h-[40px] tw-flex tw-justify-between tw-p-2 tw-text-white"
+  [ngClass]="!isCollapse ? 'tw-w-[calc(100%-160px)] tw-left-[160px]' : 'tw-w-[calc(100%-48px)] tw-left-[48px]'"
+>
+  <div (click)="handleToggleSidebar()" class="tw-cursor-pointer">
+    <fa-icon [icon]="faBars"></fa-icon>
+  </div>
+  <div>
+    <a routerLink="/login" *ngIf="!getUserCookie(); else elseCookie">
+      <fa-icon [icon]="faUser"></fa-icon>
+      Login
+    </a>
+    <ng-template #elseCookie>
+      <div (click)="handleLogout()" class="tw-cursor-pointer hover:tw-font-bold">
+        <fa-icon [icon]="faUser"></fa-icon>
+        Logout
+      </div>
+    </ng-template>
+  </div>
+</div>
